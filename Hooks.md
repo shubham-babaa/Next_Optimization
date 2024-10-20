@@ -38,3 +38,24 @@ If the user navigates to a different page in your Next.js app.
 If Hot Module Replacement (HMR) occurs (in development mode).
 
 
+3)useRef Hook in React – Explained in Detail
+The useRef hook is a built-in hook in React that allows you to create and manage mutable references that persist across component re-renders.
+Unlike state changes (which cause re-renders), changing a reference via useRef does not trigger a re-render.
+
+This makes useRef useful for accessing DOM elements, storing values that don’t trigger re-renders, or creating instance variables.
+
+const refContainer = useRef(initialValue);
+initialValue: Optional. It defines the initial value of the ref object.
+Returns: A ref object with the shape { current: initialValue }.
+
+When to Use useRef?
+Accessing or Manipulating DOM Elements
+Tracking Mutable Variables without Re-renders (like timers or previous values)
+Persisting Values between Renders (instance variables in functional components)
+
+What is Mutation?
+In programming, mutation refers to the change of an object or data structure's state after it has been created.
+A mutation modifies the original object or value directly, rather than creating a new copy. 
+In React and functional programming, mutating state or data directly is generally discouraged because it can lead to unpredictable behavior, bugs, and side effects.
+
+
