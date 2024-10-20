@@ -1,0 +1,70 @@
+Mutating vs. Non-mutating Operations
+Mutating Operations
+These operations change the original data structure:
+
+Array: push(), pop(), splice()
+Object: Modifying properties directly
+
+
+const obj = { name: 'Alice' };
+obj.name = 'Bob'; // Mutation - modifies the original object
+console.log(obj); // Output: { name: 'Bob' }
+
+Non-mutating Operations
+These operations return new data without changing the original:
+
+Array: concat(), map(), filter()
+Object: Using spread syntax or Object.assign()
+
+const obj = { name: 'Alice' };
+const newObj = { ...obj, name: 'Bob' }; // Non-mutating
+
+console.log(newObj); // Output: { name: 'Bob' }
+console.log(obj);    // Output: { name: 'Alice' } (unchanged)
+
+Mutation in React
+In React, mutating state directly is not recommended because React relies on immutability to detect changes and trigger re-renders efficiently. 
+If you mutate the state, React won’t detect that a change has occurred, and your UI might not update correctly.
+
+Example: Mutating State (Bad Practice)
+const [numbers, setNumbers] = React.useState([1, 2, 3]);
+
+const addNumber = () => {
+  numbers.push(4); // Mutates the original state
+  setNumbers(numbers); // React may not detect this change!
+};
+In this example:
+
+Even though numbers is updated, React may not re-render because the reference to the array hasn’t changed.
+Correct Way (Using Immutability)
+
+const [numbers, setNumbers] = React.useState([1, 2, 3]);
+
+const addNumber = () => {
+  const newNumbers = [...numbers, 4]; // Create a new array
+  setNumbers(newNumbers); // React detects the change and re-renders
+};
+
+Why Avoid Mutation in React?
+React’s Re-rendering Logic: React only re-renders components if state or props change. If you mutate the state directly, React may not detect the change.
+Pure Functions: Functional components in React should behave like pure functions that don’t mutate inputs.
+
+Predictable State: Avoiding mutation makes the state more predictable and easier to debug.
+Using useRef for Mutable Values
+While React state should remain immutable, useRef is an exception. The current property of a ref object can be mutated directly because it doesn’t trigger re-renders.
+
+Example: Mutation with useRef
+
+const counterRef = React.useRef(0);
+
+const incrementCounter = () => {
+  counterRef.current += 1; // Mutation - modifies the ref value
+  console.log('Current Counter:', counterRef.current);
+};
+Here, counterRef.current is being mutated directly, but this won’t cause the component to re-render.
+
+Summary
+Mutation is the direct modification of data or objects.
+In React, it’s best to avoid mutating state directly to ensure predictable and efficient updates.
+Use immutable patterns (like spread syntax or functional updates) to update state properly.
+useRef allows mutations since it doesn’t affect rendering, making it useful for storing mutable values across renders.
